@@ -35,7 +35,10 @@ class Vehicle:
 
     @classmethod
     def get_distance_traveled(cls, speed_travel, driving_time):
-        return speed_travel * driving_time
+        if driving_time >= 1:
+            return (speed_travel/60) * driving_time
+        else:
+            return (speed_travel*1000)/60 * driving_time
 
 
 class Locomotive(Vehicle):
@@ -164,4 +167,4 @@ if __name__ == "__main__":
     plane = Plane('Boeing 777', 'jet', 1852, 250, 9100, 49900)
     print(plane.get_fuel_efficiency())
     print(plane.get_weight_efficiency())
-    print(plane.get_distance_traveled(654.51, 5464))
+    print(plane.get_distance_traveled(300, 0.75))
