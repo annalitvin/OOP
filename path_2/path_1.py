@@ -1,13 +1,26 @@
+from functools import wraps, lru_cache
+
+#Python3.2+
+# @lru_cache(maxsize=32)
+# def get_logger():
+#     return [1, 2, 3] * 2
+
+
+#Python2
 
 def once(f):
-    def main(*args, **kwargs):
-        result = f(*args, **kwargs)
 
-        def wrapper():
+    memo = {}
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        try:
+            return memo[args]
+        except KeyError:
+            result = f(*args, **kwargs)
+            memo[args] = result
             return result
 
-        return wrapper
-    return main
+    return wrapper
 
 
 @once
@@ -16,5 +29,7 @@ def get_logger():
 
 
 if __name__ == "__main__":
+    logger = get_logger()
+
     assert id(get_logger()) == id(get_logger()), "Not equal"
     print('SUCCESS!')
