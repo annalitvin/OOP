@@ -13,9 +13,7 @@ def once(f):
     memo = {}
     @wraps(f)
     def wrapper(*args, **kwargs):
-        try:
-            return memo[args]
-        except KeyError:
+        if args not in memo:
             result = f(*args, **kwargs)
             memo[args] = result
             return result
